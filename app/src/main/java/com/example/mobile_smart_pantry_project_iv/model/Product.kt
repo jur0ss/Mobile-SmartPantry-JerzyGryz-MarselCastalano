@@ -4,11 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Product (
-    val uuid: String,
-    val name: String,
-    val quantity: Int,
-    val category: String,
-    val imageref: String
+    var uuid: String,
+    var name: String,
+    var quantity: Int,
+    var category: String,
+    var imageref: String
 
 
 ): java.io.Serializable
