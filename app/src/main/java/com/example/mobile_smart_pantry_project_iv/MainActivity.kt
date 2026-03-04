@@ -1,6 +1,5 @@
 package com.example.mobile_smart_pantry_project_iv
 
-import android.R.attr.data
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -15,13 +14,14 @@ import com.example.mobile_smart_pantry_project_iv.databinding.ActivityMainBindin
 import com.example.mobile_smart_pantry_project_iv.model.Product
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.jvm.java
+import org.json.JSONArray
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     private val productList = mutableListOf<Product>()
 
     private val editProductLauncher =
@@ -47,10 +47,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -64,6 +60,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         loadProducts()
+
+        // 🔴 PRZYCISK ZAPISU JSON
+        binding.saveButton.setOnClickListener {
+            saveProductsToJson()
+        }
     }
 
     @Serializable
@@ -90,7 +91,6 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("EXTRA_POSITION", position)
                 editProductLauncher.launch(intent)
             }
-
 
         } catch (e: Exception) {
             Toast.makeText(this, "Błąd odczytu JSON", Toast.LENGTH_SHORT).show()
