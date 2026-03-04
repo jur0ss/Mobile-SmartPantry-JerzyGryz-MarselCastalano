@@ -36,6 +36,7 @@ class ProductAdapter(
         } else {
             quantity.setTextColor(Color.BLACK)
         }
+        //
 
         val imageName = product.imageref.substringBefore(".")
         val resId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
