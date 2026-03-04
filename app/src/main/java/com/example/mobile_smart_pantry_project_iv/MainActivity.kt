@@ -97,4 +97,29 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+    // 🔴 FUNKCJA ZAPISU DO JSON
+    private fun saveProductsToJson() {
+        try {
+            val jsonArray = JSONArray()
+
+            for (product in productList) {
+                val jsonObject = JSONObject()
+                jsonObject.put("name", product.name)
+                jsonObject.put("category", product.category)
+                jsonObject.put("quantity", product.quantity)
+                jsonObject.put("imageref", product.imageref)
+                jsonArray.put(jsonObject)
+            }
+
+            openFileOutput("products.json", MODE_PRIVATE).use {
+                it.write(jsonArray.toString(4).toByteArray())
+            }
+
+            Toast.makeText(this, "Zapisano do products.json", Toast.LENGTH_SHORT).show()
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "Błąd zapisu JSON", Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+        }
+    }
 }
