@@ -1,6 +1,7 @@
 package com.example.mobile_smart_pantry_project_iv
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,13 @@ class ProductAdapter(
         name.text = product.name
         category.text = product.category
         quantity.text = "Ilość: ${product.quantity}"
+
+        // 🔴 Zmiana koloru gdy ilość < 3
+        if (product.quantity < 4) {
+            quantity.setTextColor(Color.RED)
+        } else {
+            quantity.setTextColor(Color.BLACK)
+        }
 
         val imageName = product.imageref.substringBefore(".")
         val resId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
