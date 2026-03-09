@@ -18,6 +18,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         loadProducts()
 
-        // 🔴 PRZYCISK ZAPISU JSON
+
         binding.saveButton.setOnClickListener {
             saveProductsToJson()
         }
@@ -74,8 +75,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadProducts() {
         try {
-            val inputStream = resources.openRawResource(R.raw.pantry)
-            val jsonString = inputStream.bufferedReader().use { it.readText() }
+            val file = File(filesDir, "products.json")
+
+            val jsonString = if (file.exists()) {
+                file.readText()
+            } else {
+                resources.openRawResource(R.raw.pantry)
+                    .bufferedReader()
+                    .use { it.readText() }
+            }
 
             val json = Json { ignoreUnknownKeys = true }
             val loadedList = json.decodeFromString<ProductList>(jsonString)
@@ -97,22 +105,16 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-    // 🔴 FUNKCJA ZAPISU DO JSON
+
     private fun saveProductsToJson() {
         try {
-            val jsonArray = JSONArray()
+            val json = Json { prettyPrint = true }
 
-            for (product in productList) {
-                val jsonObject = JSONObject()
-                jsonObject.put("name", product.name)
-                jsonObject.put("category", product.category)
-                jsonObject.put("quantity", product.quantity)
-                jsonObject.put("imageref", product.imageref)
-                jsonArray.put(jsonObject)
-            }
+            val wrapper = ProductList(products = productList)
+            val jsonString = json.encodeToString(wrapper)
 
             openFileOutput("products.json", MODE_PRIVATE).use {
-                it.write(jsonArray.toString(4).toByteArray())
+                it.write(jsonString.toByteArray())
             }
 
             Toast.makeText(this, "Zapisano do products.json", Toast.LENGTH_SHORT).show()
@@ -122,4 +124,5 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
 }

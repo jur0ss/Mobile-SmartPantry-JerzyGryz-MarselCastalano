@@ -5,105 +5,105 @@
       "name": "Butla z tlenem Mk.II",
       "quantity": 4,
       "category": "Podtrzymywanie życia",
-      "imageref": "oxygen_tank.jpg"
+      "imageref": "oxygen_tank"
     },
     {
       "uuid": "MRS-0002",
       "name": "Racja żywnościowa – Pikantna fasola",
       "quantity": 32,
       "category": "Żywność",
-      "imageref": "rations_beans.jpg"
+      "imageref": "rations_beans"
     },
     {
       "uuid": "MRS-0003",
       "name": "Zestaw napraw termicznych",
       "quantity": 6,
       "category": "Narzędzia",
-      "imageref": "thermal_kit.jpg"
+      "imageref": "thermal_kit"
     },
     {
       "uuid": "MRS-0004",
       "name": "Wkład do pochłaniacza CO₂",
       "quantity": 18,
       "category": "Podtrzymywanie życia",
-      "imageref": "co2_cartridge.jpg"
+      "imageref": "co2_cartridge"
     },
     {
       "uuid": "MRS-0005",
       "name": "Pakiet nawodnienia 1L",
       "quantity": 25,
       "category": "Żywność",
-      "imageref": "water_pack.jpg"
+      "imageref": "water_pack"
     },
     {
       "uuid": "MRS-0006",
       "name": "Mikromoduł panelu słonecznego",
       "quantity": 10,
       "category": "Narzędzia",
-      "imageref": "solar_module.jpg"
+      "imageref": "solar_module"
     },
     {
       "uuid": "MRS-0007",
       "name": "Baton odżywczy – ChocoDust",
       "quantity": 54,
       "category": "Żywność",
-      "imageref": "nutrient_bar.jpg"
+      "imageref": "nutrient_bar"
     },
     {
       "uuid": "MRS-0008",
       "name": "Awaryjny uszczelniacz ciśnieniowy",
       "quantity": 7,
       "category": "Podtrzymywanie życia",
-      "imageref": "pressure_sealant.jpg"
+      "imageref": "pressure_sealant"
     },
     {
       "uuid": "MRS-0009",
       "name": "Analizator gleby marsjańskiej",
       "quantity": 2,
       "category": "Narzędzia",
-      "imageref": "soil_analyzer.jpg"
+      "imageref": "soil_analyzer"
     },
     {
       "uuid": "MRS-0010",
       "name": "Tuba pasty proteinowej – Wanilia",
       "quantity": 40,
       "category": "Żywność",
-      "imageref": "protein_paste.jpg"
+      "imageref": "protein_paste"
     },
     {
       "uuid": "MRS-0011",
       "name": "Przenośny filtr powietrza",
       "quantity": 9,
       "category": "Podtrzymywanie życia",
-      "imageref": "air_filter.jpg"
+      "imageref": "air_filter"
     },
     {
       "uuid": "MRS-0012",
       "name": "Klucz wielofunkcyjny",
       "quantity": 15,
       "category": "Narzędzia",
-      "imageref": "wrench.jpg"
+      "imageref": "wrench"
     },
     {
       "uuid": "MRS-0013",
       "name": "Krakersy marsjańskie – Solone",
       "quantity": 60,
       "category": "Żywność",
-      "imageref": "crackers.jpg"
+      "imageref": "crackers"
     },
     {
       "uuid": "MRS-0014",
       "name": "Łata ochronna przeciw promieniowaniu",
       "quantity": 5,
       "category": "Podtrzymywanie życia",
-      "imageref": "radiation_patch.jpg"
+      "imageref": "radiation_patch"
     },
     {
       "uuid": "MRS-0015",
       "name": "Bateria do drona serwisowego",
       "quantity": 12,
       "category": "Narzędzia",
-      "imageref": "drone_battery.jpg"
+      "imageref": "drone_battery"
     }
   ]
 }
