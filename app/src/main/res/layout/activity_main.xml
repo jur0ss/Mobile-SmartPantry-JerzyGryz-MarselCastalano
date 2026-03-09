@@ -17,6 +17,12 @@
         android:text="Zapisz zmiany do pliku JSON"
         android:layout_margin="16dp"
         />
+    <Button
+        android:id="@+id/btnAddProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dodaj produkt"
+        android:layout_margin="16dp"/>
 
     <ListView
         android:id="@+id/listViewProducts"
