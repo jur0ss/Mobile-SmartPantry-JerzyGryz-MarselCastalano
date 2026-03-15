@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val productList = mutableListOf<Product>()
+    private var isAscending = true // Flaga do kierunku sortowania
 
     // Rejestracja powrotu z ekranu edycji/dodawania
     private val editProductLauncher =
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
             // Tworzymy nowy produkt z kompletem parametrów
             val newProduct = Product(
-                uuid = UUID.randomUUID().toString(), // Generuje unikalne ID dla nowego produktu
+                uuid = UUID.randomUUID().toString(),
                 name = "",
                 category = "",
                 quantity = 1,
@@ -82,6 +83,24 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("EXTRA_PRODUCT", newProduct)
             intent.putExtra("EXTRA_POSITION", -1)
             editProductLauncher.launch(intent)
+        }
+
+        // --- PRZYCISK SORTOWANIA PO KATEGORII ---
+        binding.btnSortCategory.setOnClickListener {
+            if (productList.isNotEmpty()) {
+                if (isAscending) {
+                    productList.sortBy { it.category.lowercase() }
+                } else {
+                    productList.sortByDescending { it.category.lowercase() }
+                }
+
+                isAscending = !isAscending // Zmiana kierunku przy następnym kliknięciu
+
+                (binding.listViewProducts.adapter as ProductAdapter).notifyDataSetChanged()
+
+                val msg = if (!isAscending) "Sortowanie: Kategoria A-Z" else "Sortowanie: Kategoria Z-A"
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            }
         }
 
         // --- PRZYCISK ZAPISU DO PLIKU ---
