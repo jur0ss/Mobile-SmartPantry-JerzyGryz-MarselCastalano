@@ -24,6 +24,14 @@
         android:text="Dodaj produkt"
         android:layout_margin="16dp"/>
 
+    <Button
+        android:id="@+id/btnSortCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sortuj wg kategorii"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"/>
+
     <ListView
         android:id="@+id/listViewProducts"
         android:layout_width="match_parent"
