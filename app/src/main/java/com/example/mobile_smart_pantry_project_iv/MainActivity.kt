@@ -16,22 +16,19 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.json.JSONArray
-import org.json.JSONObject
 import java.io.File
+import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val productList = mutableListOf<Product>()
 
+    // Rejestracja powrotu z ekranu edycji/dodawania
     private val editProductLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
             if (result.resultCode == Activity.RESULT_OK) {
-
                 val data = result.data
-
                 val updatedProduct = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     data?.getSerializableExtra("UPDATED_PRODUCT", Product::class.java)
                 } else {
@@ -41,8 +38,15 @@ class MainActivity : AppCompatActivity() {
 
                 val position = data?.getIntExtra("POSITION", -1) ?: -1
 
-                if (updatedProduct != null && position >= 0) {
-                    productList[position] = updatedProduct
+                if (updatedProduct != null) {
+                    if (position >= 0) {
+                        // Edytujemy istniejący produkt
+                        productList[position] = updatedProduct
+                    } else {
+                        // Dodajemy nowy produkt na początek listy
+                        productList.add(0, updatedProduct)
+                    }
+                    // Odświeżamy listę na ekranie
                     (binding.listViewProducts.adapter as ProductAdapter).notifyDataSetChanged()
                 }
             }
@@ -62,27 +66,40 @@ class MainActivity : AppCompatActivity() {
 
         loadProducts()
 
+        // --- PRZYCISK DODAWANIA NOWEGO PRODUKTU ---
+        binding.btnAddProduct.setOnClickListener {
+            val intent = Intent(this, EditProductActivity::class.java)
 
+            // Tworzymy nowy produkt z kompletem parametrów
+            val newProduct = Product(
+                uuid = UUID.randomUUID().toString(), // Generuje unikalne ID dla nowego produktu
+                name = "",
+                category = "",
+                quantity = 1,
+                imageref = "ic_launcher_foreground"
+            )
+
+            intent.putExtra("EXTRA_PRODUCT", newProduct)
+            intent.putExtra("EXTRA_POSITION", -1)
+            editProductLauncher.launch(intent)
+        }
+
+        // --- PRZYCISK ZAPISU DO PLIKU ---
         binding.saveButton.setOnClickListener {
             saveProductsToJson()
         }
     }
 
     @Serializable
-    data class ProductList(
-        val products: List<Product>
-    )
+    data class ProductList(val products: List<Product>)
 
     private fun loadProducts() {
         try {
             val file = File(filesDir, "products.json")
-
             val jsonString = if (file.exists()) {
                 file.readText()
             } else {
-                resources.openRawResource(R.raw.pantry)
-                    .bufferedReader()
-                    .use { it.readText() }
+                resources.openRawResource(R.raw.pantry).bufferedReader().use { it.readText() }
             }
 
             val json = Json { ignoreUnknownKeys = true }
@@ -99,30 +116,20 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("EXTRA_POSITION", position)
                 editProductLauncher.launch(intent)
             }
-
         } catch (e: Exception) {
-            Toast.makeText(this, "Błąd odczytu JSON", Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
+            Toast.makeText(this, "Błąd ładowania produktów", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun saveProductsToJson() {
         try {
             val json = Json { prettyPrint = true }
-
             val wrapper = ProductList(products = productList)
             val jsonString = json.encodeToString(wrapper)
-
-            openFileOutput("products.json", MODE_PRIVATE).use {
-                it.write(jsonString.toByteArray())
-            }
-
-            Toast.makeText(this, "Zapisano do products.json", Toast.LENGTH_SHORT).show()
-
+            openFileOutput("products.json", MODE_PRIVATE).use { it.write(jsonString.toByteArray()) }
+            Toast.makeText(this, "Zapisano do JSON!", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(this, "Błąd zapisu JSON", Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
         }
     }
-
 }
